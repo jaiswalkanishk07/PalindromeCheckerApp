@@ -57,7 +57,6 @@ class UseCase3PalindromeCheckerApp {
 }
 
 
-
 // UC4: Character Array Based Palindrome Check
 class UseCase4PalindromeCheckerApp {
     public static void main(String[] args) {
