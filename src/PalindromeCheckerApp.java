@@ -232,3 +232,26 @@ class UseCase9PalindromeCheckerApp {
         return check(s, start + 1, end - 1);
     }
 }
+
+
+// UC10: Normalized Palindrome Validation
+class UseCase10PalindromeCheckerApp {
+    public static void main(String[] args) {
+        String input = "A man a plan a canal Panama";
+
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+
+        boolean isPalindrome = true;
+
+        for (int i = 0; i < normalized.length() / 2; i++) {
+            // Compare symmetric characters
+            if (normalized.charAt(i) != normalized.charAt(normalized.length() - 1 - i)) {
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + isPalindrome);
+    }
+}
