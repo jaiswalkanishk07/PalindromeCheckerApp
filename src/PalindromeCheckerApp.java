@@ -36,3 +36,22 @@ class UseCase2PalindromeCheckerApp {
         System.out.println("Is it a Palindrome? : " + isPalindrome);
     }
 }
+
+
+// UC3: Palindrome Check Using String Reverse
+class UseCase3PalindromeCheckerApp {
+    public static void main(String[] args) {
+        String input = "madam";
+        String reverseInput = "";
+
+        for (int i = input.length() - 1; i >= 0; i--) {
+            reverseInput += input.charAt(i);
+        }
+
+        boolean isPalindrome = input.equals(reverseInput);
+
+        System.out.println("Input text: " + input);
+        System.out.println("Reversed text: " + reverseInput);
+        System.out.println("Is it a Palindrome? : " + isPalindrome);
+    }
+}
