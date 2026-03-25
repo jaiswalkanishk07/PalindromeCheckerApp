@@ -348,3 +348,80 @@ class UseCase12PalindromeCheckerApp {
         }
     }
 }
+
+
+// UC13: Repository Performance Benchmark
+class UseCase13PalindromeCheckerApp {
+
+    public static void main(String[] args) {
+        // Using a longer string makes the performance differences more obvious
+        String input = "A man a plan a canal Panama".replaceAll("\\s+", "").toLowerCase();
+
+        System.out.println("--- Palindrome Algorithm Benchmark ---");
+        System.out.println("Input Length: " + input.length() + " characters\n");
+
+        // List of all measurable strategies
+        benchmark("UC4: Two-Pointer (Most Efficient)", input, new TwoPointerStrategy());
+        benchmark("UC3: String Reversal (Object Heavy)", input, new ReversalStrategy());
+        benchmark("UC5: Stack-Based (LIFO)", input, new StackStrategy());
+        benchmark("UC7: Deque-Based (Double-Ended)", input, new DequeStrategy());
+        benchmark("UC9: Recursive (Call Stack)", input, new RecursiveStrategy());
+    }
+
+    private static void benchmark(String name, String input, PalindromeAlgorithm strategy) {
+        long startTime = System.nanoTime();
+        strategy.check(input);
+        long endTime = System.nanoTime();
+
+        System.out.printf("%-35s : %10d ns%n", name, (endTime - startTime));
+    }
+
+    // --- Strategy Interface ---
+    interface PalindromeAlgorithm { boolean check(String s); }
+
+
+    // --- Concrete Implementations (Nested for isolation) ---
+    static class TwoPointerStrategy implements PalindromeAlgorithm {
+        public boolean check(String s) {
+            int start = 0, end = s.length() - 1;
+            while (start < end) {
+                if (s.charAt(start++) != s.charAt(end--)) return false;
+            }
+            return true;
+        }
+    }
+
+    static class ReversalStrategy implements PalindromeAlgorithm {
+        public boolean check(String s) {
+            String rev = "";
+            for (int i = s.length() - 1; i >= 0; i--) rev += s.charAt(i);
+            return s.equals(rev);
+        }
+    }
+
+    static class StackStrategy implements PalindromeAlgorithm {
+        public boolean check(String s) {
+            java.util.Stack<Character> stack = new java.util.Stack<>();
+            for (char c : s.toCharArray()) stack.push(c);
+            for (char c : s.toCharArray()) if (c != stack.pop()) return false;
+            return true;
+        }
+    }
+
+    static class DequeStrategy implements PalindromeAlgorithm {
+        public boolean check(String s) {
+            java.util.Deque<Character> d = new java.util.ArrayDeque<>();
+            for (char c : s.toCharArray()) d.add(c);
+            while (d.size() > 1) if (!d.removeFirst().equals(d.removeLast())) return false;
+            return true;
+        }
+    }
+
+    static class RecursiveStrategy implements PalindromeAlgorithm {
+        public boolean check(String s) { return isPal(s, 0, s.length() - 1); }
+        private boolean isPal(String s, int i, int j) {
+            if (i >= j) return true;
+            return s.charAt(i) == s.charAt(j) && isPal(s, i + 1, j - 1);
+        }
+    }
+}
