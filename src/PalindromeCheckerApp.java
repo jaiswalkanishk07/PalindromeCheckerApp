@@ -1,5 +1,10 @@
-import java.util.Stack; //UC5
+// UC5
+import java.util.Stack;
 
+// UC6
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 // Base application setup
 public class PalindromeCheckerApp {
@@ -100,6 +105,35 @@ class UseCase5PalindromeCheckerApp {
 
         for (char c : input.toCharArray()) {
             if (c != stack.pop()) {
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + isPalindrome);
+    }
+}
+
+
+
+// UC6: Queue + Stack Based Palindrome Check
+class UseCase6PalindromeCheckerApp {
+    public static void main(String[] args) {
+        String input = "civic";
+
+        Queue<Character> queue = new LinkedList<>();
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : input.toCharArray()) {
+            queue.add(c);
+            stack.push(c);
+        }
+
+        boolean isPalindrome = true;
+
+        while (!queue.isEmpty()) {
+            if (!queue.poll().equals(stack.pop())) {
                 isPalindrome = false;
                 break;
             }
