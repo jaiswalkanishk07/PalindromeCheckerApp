@@ -21,8 +21,6 @@ class UseCase1PalindromeCheckerApp {
 //UC2: Hardcoded Palindrome
 class UseCase2PalindromeCheckerApp {
     public static void main(String[] args) {
-        // Preserving UC1 Welcome
-        System.out.println("Welcome to Palindrome Checker (UC2)");
 
         String input = "madam";
         boolean isPalindrome = true;
