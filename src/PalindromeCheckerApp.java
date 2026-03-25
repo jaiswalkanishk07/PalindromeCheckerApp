@@ -376,11 +376,11 @@ class UseCase13PalindromeCheckerApp {
         System.out.printf("%-35s : %10d ns%n", name, (endTime - startTime));
     }
 
-    // --- Strategy Interface ---
+    // Strategy Interface
     interface PalindromeAlgorithm { boolean check(String s); }
 
 
-    // --- Concrete Implementations (Nested for isolation) ---
+    // Concrete Implementations (Nested for isolation)
     static class TwoPointerStrategy implements PalindromeAlgorithm {
         public boolean check(String s) {
             int start = 0, end = s.length() - 1;
