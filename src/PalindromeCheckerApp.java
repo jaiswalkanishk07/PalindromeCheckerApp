@@ -288,3 +288,63 @@ class UseCase11PalindromeCheckerApp {
         }
     }
 }
+
+
+// UC12: Strategy Pattern for Palindrome Algorithms (Advanced)
+class UseCase12PalindromeCheckerApp {
+
+    public static void main(String[] args) {
+        String input = "level";
+
+        // Step 3: Inject strategy at runtime
+        // You can easily swap 'new StackStrategy()' with 'new DequeStrategy()'
+        PalindromeStrategy strategy = new StackStrategy();
+
+        // Execute the selected algorithm through the interface contract
+        boolean isPalindrome = strategy.check(input);
+
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + isPalindrome);
+    }
+
+    /**
+     * Step 1: Define the strategy contract as a nested interface.
+     */
+    interface PalindromeStrategy {
+        boolean check(String input);
+    }
+
+    /**
+     * Step 2a: Concrete Implementation using a Stack.
+     */
+    static class StackStrategy implements PalindromeStrategy {
+        @Override
+        public boolean check(String input) {
+            java.util.Stack<Character> stack = new java.util.Stack<>();
+            for (char c : input.toCharArray()) {
+                stack.push(c);
+            }
+            for (char c : input.toCharArray()) {
+                if (c != stack.pop()) return false;
+            }
+            return true;
+        }
+    }
+
+    /**
+     * Step 2b: Concrete Implementation using a Deque (for comparison).
+     */
+    static class DequeStrategy implements PalindromeStrategy {
+        @Override
+        public boolean check(String input) {
+            java.util.Deque<Character> deque = new java.util.ArrayDeque<>();
+            for (char c : input.toCharArray()) {
+                deque.add(c);
+            }
+            while (deque.size() > 1) {
+                if (!deque.removeFirst().equals(deque.removeLast())) return false;
+            }
+            return true;
+        }
+    }
+}
